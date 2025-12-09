@@ -1,0 +1,49 @@
+version: "3.9"
+
+services:
+  backend:
+    build: ./backend
+    container_name: mlops-backend
+    restart: always
+    ports:
+      - "8000:8000"
+    networks:
+      - app-network
+    depends_on:
+      - mlflow
+    environment:
+      - MLFLOW_TRACKING_URI=http://mlflow:5000
+    volumes:
+      - ./backend/models:/app/models
+
+  frontend:
+    build: ./melodymind-frontend
+    container_name: melodymind-frontend
+    ports:
+      - "3000:80"
+    environment:
+      - VITE_API_URL=/api
+    depends_on:
+      - backend
+    networks:
+      - app-network
+
+  mlflow:
+    image: ghcr.io/mlflow/mlflow:v2.9.2
+    container_name: melodymind-mlflow
+    ports:
+      - "5000:5000"
+    # Use a directory mount for the sqlite DB to avoid Windows file permission issues.
+    # The sqlite URL uses four slashes for an absolute path inside the container.
+    command: mlflow server --backend-store-uri sqlite:////var/lib/mlflow/mlflow.db --default-artifact-root /mlruns --host 0.0.0.0
+    environment:
+      - MLFLOW_GUNICORN_OPTS=--forwarded-allow-ips='*'
+    volumes:
+      - ./mlflow_data:/mlruns
+      - ./mlflow_db:/var/lib/mlflow
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge

@@ -1,0 +1,10 @@
+fastapi
+uvicorn
+tensorflow
+librosa
+numpy
+scipy
+soundfile
+scikit-learn
+python-multipart
+mlflow==2.9.2

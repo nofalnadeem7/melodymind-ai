@@ -33,7 +33,7 @@ export default function App() {
       }, 1500);
     } catch (err) {
       console.error(err);
-      setError('Connection Error. Is the backend jamming?');
+      setError('Connection Error. Is the backend jamming? Check please');
       setLoading(false);
     }
   };

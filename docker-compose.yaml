@@ -20,7 +20,7 @@ services:
     build: ./melodymind-frontend
     container_name: melodymind-frontend
     ports:
-      - "3000:80"
+      - "80:80"
     environment:
       - VITE_API_URL=/api
     depends_on:

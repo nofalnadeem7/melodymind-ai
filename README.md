@@ -94,9 +94,13 @@ MelodyMind uses a Convolutional Recurrent Neural Network to analyze audio:
 
 ## 📂 Project Structure
 ├── frontend/           # React frontend source & Nginx configurations
+
 ├── backend/            # FastAPI application & ML inference logic
+
 ├── models/             # Local directory for model weights (.h5)
+
 ├── register-model.py   # Utility script for MLflow registration
+
 └── docker-compose.yml  # Multi-container orchestration manifest
 
 ---
